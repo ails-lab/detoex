@@ -36,14 +36,14 @@ STANZA_MODELS_KWARGS = {
     }
 }
 
-STARTUP_LANGUAGES = [
+LANGUAGE_CODES = [
     'en',
     'fr',
     'el',
 ]
 
 PROCESSED_TERMS_FILEPATHS = {
-    # 'en': os.path.join(VOCABULARIES_DIR, 'en_vocab_processed.pickle'),
-    # 'fr': os.path.join(VOCABULARIES_DIR, 'fr_vocab_processed.pickle'),
-    # 'el': os.path.join(VOCABULARIES_DIR, 'el_vocab_processed.pickle'),
+    'en': os.path.join(VOCABULARIES_DIR, 'en_vocab_processed.pickle'),
+    'fr': os.path.join(VOCABULARIES_DIR, 'fr_vocab_processed.pickle'),
+    'el': os.path.join(VOCABULARIES_DIR, 'el_vocab_processed.pickle'),
 }

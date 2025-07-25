@@ -19,6 +19,6 @@ def prompt_llama(system_prompt: str, user_prompt: str, system_args: list[str] = 
             {'role': 'user', 'content': user_prompt.format(*user_args)}
         ]
     }
-    print(args['messages'])
+    # print(args['messages'])
     response = client.chat.completions.create(**args)
     return response.choices[0].message.content
