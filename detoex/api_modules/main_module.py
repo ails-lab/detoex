@@ -29,7 +29,7 @@ def non_term_pipeline(texts, language='en') -> list[str | None]:
     system_prompt = prompts['system_prompt']
     user_prompt = prompts['user_prompt']
     for text in texts:
-        response = prompt_llama(system_prompt, user_prompt, user_args=[text])
+        response = prompt_llama(system_prompt, user_prompt, user_args=[text], language=language)
         decision, explanation = extract_non_term_output(response, language=language)
         explanations.append(explanation if decision else None)
     return explanations
@@ -72,7 +72,8 @@ def term_based_pipeline(texts, language='en') -> list[list[str]]:
         explanations = []
         for match in matches:
             response = prompt_llama(system_prompt, user_prompt,
-                                    user_args=[match.term_literal, match.issue_description, text, match.categories])
+                                    user_args=[match.term_literal, match.issue_description, text, match.categories],
+                                    language=language)
             decision, explanation = extract_term_output(response, language=language)
             if decision:
                 explanations.append(explanation)
@@ -95,7 +96,7 @@ def fuse_explanations(explanations: list[str], language: str = 'en') -> str:
     for i, explanation in enumerate(explanations, 1):
         formatted_explanations.append(f"**Text {i}:** {explanation}")
     formatted_explanations = "\n".join(formatted_explanations)
-    return prompt_llama(system_prompt, user_prompt, user_args=[formatted_explanations])
+    return prompt_llama(system_prompt, user_prompt, user_args=[formatted_explanations], language=language)
 
 
 def detect_and_explain(texts: list[str], language: str = 'en') -> list[str]:
