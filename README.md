@@ -1,3 +1,3 @@
 ## Acknowledgements
 
-The work herein has been funded by the European Commission as part of a Financial Support for Third Parties with the UTTER (Unified Transcription and Translation for Extended Reality) project.
+This project is funded as part of an FSTP call from the EU project UTTER (Unified Transcription and Translation for Extended Reality), supported by the European Union’s Horizon Europe programme under grant agreement No. 101070631.
