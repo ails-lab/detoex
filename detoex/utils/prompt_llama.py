@@ -24,6 +24,7 @@ def prompt_llama(system_prompt: str, user_prompt: str, system_args: list[str] = 
     
     # Get language-specific endpoint configuration
     endpoint_config = LLM_ENDPOINTS.get(language, LLM_ENDPOINTS['en'])  # Default to English if not found
+    print(endpoint_config)
     
     # Create OpenAI client with language-specific settings
     client = OpenAI(
@@ -41,6 +42,6 @@ def prompt_llama(system_prompt: str, user_prompt: str, system_args: list[str] = 
             {'role': 'user', 'content': user_prompt.format(*user_args)}
         ]
     }
-    
+    print(args)
     response = client.chat.completions.create(**args)
     return response.choices[0].message.content
