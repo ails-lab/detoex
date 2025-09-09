@@ -26,6 +26,8 @@ def extract_term_output(response, language='en'):
         return match.group(1).strip() if match else None
 
     decision, explanation = extract_step(3), extract_step(4)
+    if decision is None:
+        return False, None
     if language == 'en':
         decision = re.search(r"((non)|(not)|(n't)).*toxic", decision.lower()) is None
     elif language == 'fr':
