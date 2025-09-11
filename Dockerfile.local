@@ -1,0 +1,38 @@
+FROM python:3.12-slim
+
+WORKDIR /app
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV LLM_PROMPTS_DIR=/app/data/prompts
+ENV STANZA_RESOURCES_DIR=/app/data/stanza_resources
+ENV VOCABULARIES_DIR=/app/data/vocabularies
+
+# Change these variables to your own LLM API endpoints
+ENV LLM_URL_EN=http://172.17.0.1:8080/v1
+ENV LLM_URL_FR=http://172.17.0.1:8080/v1
+ENV LLM_URL_EL=http://172.17.0.1:8080/v1
+
+# Copy requirements and install dependencies first (for better caching)
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy data directories with resources
+COPY data/prompts /app/data/prompts
+COPY data/vocabularies /app/data/vocabularies
+
+# Copy Stanza download script
+COPY download_stanza_models.py /app/download_stanza_models.py
+
+# Create Stanza resources directory and download models
+RUN mkdir -p /app/data/stanza_resources && \
+    python /app/download_stanza_models.py
+
+# Copy application code
+COPY detoex /app/detoex
+
+# Expose the API port
+EXPOSE 8000
+
+# Run the FastAPI application
+CMD ["python", "-m", "uvicorn", "detoex.api:app", "--host", "0.0.0.0", "--port", "8000"]
